@@ -1,0 +1,70 @@
+﻿MUSEU EM CONSTRUÇÃO — HISTÓRICO DE REPRODUÇÃO
+Registro iniciado nesta entrega. Não reconstrói detalhes não documentados das anteriores.
+
+ENTREGA 0.3.0 — 24/10/2026
+Requisitos: acrescentar duas cientistas recentes, ao menos uma brasileira; fotografia na revelação; duas etapas adicionais de investigação; passeio 3D com caminhada e cortinas individuais para as quatro histórias selecionadas.
+
+Decisões: incluir Jaqueline Goes de Jesus e Katie Bouman, preservando o caráter coletivo dos trabalhos; três etapas obrigatórias por história; reservar apenas investigações completas; CSS 3D para manter abertura direta de index.html e hospedagem estática sem dependências; câmera com rotas e controles; revelar cada mural separadamente. Mary Anning usa pintura histórica com identificação explícita. Fotografias obtidas do Wikimedia Commons com metadados de autoria e licença, sem gerar retratos artificiais. Rascunho com chave v3 própria; arquivos v0.2.0 preservados em archive/v0.2.0.
+
+Arquivos: index.html, app.js, investigations.js, portraits.js, museum.js, museum.css, verify.cjs, package.json, README.md, CHANGELOG.md, assets/genome.svg, assets/blackhole.svg, assets/portraits/*.jpg, créditos e documentos desta pasta. acervo.js e vitrines.js fornecem as oito histórias iniciais; investigations.js acrescenta as duas novas e as 30 etapas.
+
+Ferramentas: PowerShell para gravação; Node para consultas, downloads e testes; API Wikimedia para fontes e licenças; Playwright Core previamente instalado em .qa e Chrome local para QA. As fotos e o site não dependem de serviços remotos durante a execução; links para fontes são externos.
+
+Comandos reais, executados com caminhos absolutos:
+node --use-system-ca .qa/fetch-photos.cjs
+node --use-system-ca .qa/download-photos.cjs
+node --check app.js
+node --check museum.js
+node --check investigations.js
+node verify.cjs --browser
+
+Resultados: dez imagens baixadas; dez trajetórias e 30 etapas verificadas; teste Chrome aprovado. Após inspeção visual, corrigidos enquadramento da câmera, contraste do botão, preferência de movimento reduzido e impressão. Teste completo repetido e aprovado, incluindo clique em mural, quatro aberturas, fotos, restauração, 390px de largura e PDF. Consulte VALIDACAO.md para limites. Nenhuma publicação ou QR code definitivo realizado.
+
+ENTREGA 0.4.0 — 24/10/2026
+Requisitos: porta de entrada, luzes, bustos e artefatos no museu; reformular Situar e Conectar com pistas, imagens e conectores.
+Aplicado: porta dupla animada acessível pelo botão Porta de entrada; seis luminárias e manchas de luz no piso; dois bustos alegóricos e vitrines ilustradas de microscópio e esfera armilar. Situar agora abre três pistas e monta etiquetas de tempo/lugar; Conectar liga três pares de cartões com curvas SVG. Observar mantém os desafios anteriores. Imagem principal deixa de repetir nas duas novas etapas. Nova chave de rascunho v4, sem converter respostas antigas em atividades concluídas. Arquivos de referência v0.3.0 preservados em archive.
+Arquivos principais: visual-investigation.js, app.js, museum.js, museum.css, index.html, verify.cjs, seis SVGs, package.json e documentação. Nenhuma mudança nas fotos e licenças existentes.
+Comandos: node .qa/upgrade-v4.cjs; node .qa/decor-v4.cjs; node --check visual-investigation.js; node --check museum.js; node --check app.js; node verify.cjs --browser. Testes aprovados após ajustar espera pelo frame dos conectores. Limites: Chrome headless, sem validação em aparelhos físicos, sem publicação.
+
+ENTREGA 0.5.0 — 24/10/2026
+Requisitos: cartas antigas e etiquetas incorretas; contextos mais específicos; substituir associação infantil por jogo de investigação; plantas, janelas e iluminação no museu.
+Decisões: dez dossiês por episódio histórico; seis etiquetas com quatro distratores; reconstrução de tempo/lugar. Laboratório de decisões com quatro créditos, duas ações, observações simuladas e conclusão limitada pelas evidências. Não apresentar os resultados como experimentos históricos reais. Acrescentadas duas janelas, quatro plantas e seis arandelas à cena CSS 3D. Rascunho novo v5.
+Arquivos: visual-investigation.js, museum.js, museum.css, app.js, index.html, verify.cjs, package.json, assets/museum-plant.svg e documentação.
+Comandos: node .qa/scenery-v5.cjs; node .qa/test-v5-upgrade.cjs; node --check visual-investigation.js; node --check museum.js; node verify.cjs --browser. Resultado: aprovado; capturas inspecionadas. Contextos pesquisados com fontes institucionais, incluindo NHM (plesiossauro de 1823), Embrapa (programa de 1963–1969) e Nobel Prize (artemisinina na década de 1970). Fontes das trajetórias permanecem nas fichas. Sem publicação.
+
+ENTREGA 0.6.0 — 25/10/2026
+Requisitos: etiquetas arrastáveis até os campos, imagens e janelas melhores, busto tridimensional.
+Implementado: Pointer Events com carta flutuante, indicação de destino, rolagem na borda do diálogo e alternativa por clique; WebGL para esculturas alegóricas volumétricas e mudança de perspectiva conforme a câmera; pedestais em CSS 3D; janela refinada e jardim SVG original; acabamento de ilustrações vetoriais existentes. Nenhum retrato histórico alterado. Progresso v5 preservado, já que as respostas não mudaram.
+Arquivos: visual-investigation.js, sculpture.js, museum.js, museum.css, index.html, verify.cjs, package.json, assets/garden-view.svg, SVGs de objetos e documentação. Publicação requer sculpture.js além dos demais arquivos do README.
+Comandos reais: node .qa/upgrade-v6.cjs; node .qa/assets-v6.cjs; node .qa/webgl-v6.cjs; node --check visual-investigation.js; node --check sculpture.js; node --check museum.js; node verify.cjs --browser; node .qa/touch-v6.cjs; node .qa/bust-v6.cjs. Testes finais aprovados no Chrome headless. Referência de arquivos anteriores em archive/v0.5.0. Limites: sem aparelho físico, sem publicação e WebGL necessário para as esculturas.
+
+ENTREGA 0.7.0 — 26/10/2026
+Requisitos: objetivos e instruções claros, selos arrastáveis que permaneçam inteiros na ficha, contraste com papel, troca/retirada/devolução, controles no museu sem cobrir os murais, ajuda inicial, janelas melhores e retirada de inscrições explicativas de porta/galeria. Preservar acervo e progresso compatível.
+
+Decisões e implementação: componente único sealArt reutilizado no acervo, no arraste e na ficha; selos de cores contrastantes e tamanho uniforme por largura; marcador no lugar da origem, transferência sem duplicação, ações de retirar e trocar; instruções antes dos elementos e retorno local específico. Número do mural conduz ao local; abertura é ação explícita. Rotas, controles, ajuda e botão de abertura estão no overlay da cena. Projeção ajustada à altura disponível para reservar espaço às ações. Inscrições removidas da porta, com detalhes visuais em seu lugar. Jardim SVG redesenhado. Chave de progresso v5 preservada e dados das dez cientistas, retratos e fontes mantidos.
+
+Arquivos principais: visual-investigation.js, app.js, museum.js, museum.css, index.html, assets/garden-view.svg, verify.cjs, package.json e documentação. Referências da versão anterior preservadas em archive/v0.6.0.
+
+Comandos executados com caminhos absolutos: node .qa/visual-v7.cjs; node .qa/interface-v7.cjs; node .qa/garden-v7.cjs; node .qa/navigation-v7.cjs; node .qa/guidance-v7.cjs; node --check visual-investigation.js; node --check museum.js; node --check app.js; node verify.cjs --browser; node .qa/usability-v7.cjs. Resultado final: testes completos e focados aprovados. Inspeção de capturas motivou corrigir herança de cor/display nos selos e evitar a abertura automática por clique na rota. Limites documentados em VALIDACAO.md. Sem publicação.
+
+ENTREGA 0.8.0 — 26/10/2026
+Requisitos: sequência fixa de informações nas três etapas; avaliação por Conferir em Observar; Situar com pistas/selos; laboratório com duas ações e Defender, sem conclusões; retirar histórias apenas na curadoria; porta integral; títulos superiores; exploração mais visível; paisagens diferentes; iluminação volumétrica sem sobrepor janelas; botão para voltar à página inicial.
+
+Aplicado: cabeçalho separado de abas, introdução e atividade; seleção local destacada sem envio automático; confirmação explícita e botão seguinte tornado visível após acerto, sem avanço automático. Laboratório simplificado, feedback de ações complementares e reserva somente no fim; história já reservada fica informada e bloqueada contra retirada dentro da atividade. Início no cabeçalho, logotipo e cena, com tela de retomada preservada. Chave de armazenamento e dados históricos mantidos. Nova exposição limpa também escolhas e estados exploratórios de sessão após confirmação.
+
+Galeria: porta de y=-760 a 335, placas acima dos murais, indicação de exploração ampliada, paisagem de pátio original para a segunda janela, arandelas em z=650/220/-2020 e luminárias dos murais compostas por volumes e faces CSS 3D.
+
+Arquivos: app.js, visual-investigation.js, museum.js, museum.css, index.html, assets/garden-courtyard.svg, verify.cjs, package.json e documentação. Referências anteriores preservadas em archive/v0.7.0. Cientistas, fontes, fotografias e licenças não alteradas.
+
+Comandos executados com caminhos absolutos: node .qa/activities-v8.cjs; node .qa/gallery-v8.cjs; node --check app.js; node --check visual-investigation.js; node --check museum.js; node verify.cjs --browser; node .qa/usability-v8.cjs. Resultado final aprovado. Teste geométrico inicial revelou rodapé que impedia altura integral; corrigido e teste repetido. Sem publicação; limites em VALIDACAO.md.
+
+ENTREGA 0.8.1 — 26/10/2026
+Solicitação: limpar respostas individualmente em cada vitrine e explicar diferenças entre as três missões.
+Implementação: botão em cartões e no diálogo; confirmação informa que reserva/revelação da história serão removidas quando aplicável. Limpa progresso, escolha observada, ordem e estados de pistas/selos/ações apenas da história escolhida; preserva as demais e o título. Estado de retomada ajustado se houver menos de quatro reservas. Documentado que as missões mudam orientação, pergunta de curadoria e reflexão, não os desafios.
+Arquivos: app.js, index.html, museum.css, package.json, README.md, CHANGELOG.md e documentação. Referências em archive/v0.8.0. Comandos com caminhos absolutos: node .qa/clear-v081.cjs; node --check app.js; node .qa/test-clear-v081.cjs; node verify.cjs --browser. Teste específico e regressão completa aprovados. Sem publicação.
+
+ENTREGA 0.9.0 — 26/10/2026
+Solicitação: imagem simulando banca de apresentação em Conectar e retirada de Início dos controles do museu.
+Aplicado: ilustração de banca com personagens fictícias gerada com imagegen embutido e integrada como PNG local com legenda e alt; Início removido apenas de dentro da cena, mantendo cabeçalho e logotipo para retorno à abertura. Inicialização de app.js ajustada para não acessar o botão removido.
+Arquivos: assets/banca-apresentacao.png, assets/banca-apresentacao-prompt.txt, visual-investigation.js, index.html, app.js, museum.css, verify.cjs, package.json e documentação. Acervo, fotos, missões e progresso preservados. Referências em archive/v0.8.1.
+Comandos com caminhos absolutos: node .qa/panel-v9.cjs; Copy-Item da imagem original para assets/banca-apresentacao.png; node --check app.js; node --check visual-investigation.js; node verify.cjs --browser; node .qa/test-panel-v9.cjs. Teste completo e específico aprovados. Imagem e integração inspecionadas; sem publicação.

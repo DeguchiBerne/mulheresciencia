@@ -1,0 +1,1 @@
+﻿{"name":"museu-em-construcao","version":"0.9.0","private":true,"scripts":{"test":"node verify.cjs","test:browser":"node verify.cjs --browser","test:usability":"node .qa/usability-v8.cjs","test:clear":"node .qa/test-clear-v081.cjs"}}

@@ -1,0 +1,27 @@
+﻿'use strict';
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),path=require('node:path');
+const nodes=new Map(),storage=new Map();
+const node=id=>{if(!nodes.has(id))nodes.set(id,{hidden:false,value:'',textContent:'',innerHTML:'',open:false,disabled:false,dataset:{},setAttribute(){},addEventListener(){},querySelector(){return null;},focus(){},classList:{toggle(){}},showModal(){this.open=true;},close(){this.open=false;}});return nodes.get(id);};
+let printCount=0;
+const context=vm.createContext({console,module:undefined,setTimeout:()=>1,clearTimeout(){},localStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)},document:{getElementById:node,querySelectorAll:()=>[],querySelector:()=>null,addEventListener(){},activeElement:null},window:{scrollTo(){},print(){printCount++;},confirm:()=>true}});
+for(const f of ['acervo.js','app.js'])vm.runInContext(fs.readFileSync(path.join(__dirname,f),'utf8'),context,{filename:f});
+const run=s=>vm.runInContext(s,context);
+assert.equal(run('ACERVO.length'),8);assert.equal(run('ACERVO.filter(x=>x.origin==="br").length'),4);assert.equal(run('new Set(ACERVO.map(x=>x.id)).size'),8);assert.equal(run('MISSOES.length'),3);
+assert.ok(run('ACERVO.every(x=>new URL(x.source).protocol==="https:")'.replace('new URL(x.source).protocol==="https:"','x.source.startsWith("https://")')));
+run("['bertha','johanna','nise','sonia'].forEach(toggle)");assert.equal(run('state.selected.length'),4);assert.equal(node('compose').disabled,false);
+run("toggle('mary')");assert.equal(run('state.selected.length'),4);assert.ok(node('status').textContent.includes('ocupados'));
+run("toggle('bertha')");assert.equal(node('compose').disabled,true);run("toggle('mary')");
+run("state.title='<img src=x onerror=alert(1)>';state.reason='Conectamos pesquisas e trajetórias para investigar oportunidades e reconhecimento na ciência.';show('result',false)");
+assert.equal(node('result-title').textContent,'<img src=x onerror=alert(1)>');assert.equal((node('gallery').innerHTML.match(/<article/g)||[]).length,4);assert.equal(node('result').hidden,false);assert.equal(node('workspace').hidden,true);
+run("openDetail('mary')");assert.equal(node('detail').open,true);assert.ok(node('detail-content').innerHTML.includes('Natural History Museum'));
+run("state.selected=[];restore()");assert.equal(run('state.selected.length'),4);
+storage.set('museu-construcao-v1',JSON.stringify({selected:['mary','mary','invalid'],mission:'invalid',stage:'result',title:4,reason:null}));run('restore()');assert.equal(run('state.selected.join()'),'mary');assert.equal(run('state.stage'),'collection');assert.equal(run('state.mission'),'cotidiano');
+storage.set('museu-construcao-v1','{broken');run('restore()');
+node('print').onclick();assert.equal(printCount,1);node('restart').onclick();assert.equal(run('state.selected.length'),0);assert.equal(run('state.stage'),'mission');
+const html=fs.readFileSync(path.join(__dirname,'index.html'),'utf8');
+for(const id of nodes.keys())assert.ok(html.includes('id="'+id+'"'),'Elemento ausente: '+id);
+for(const f of ['styles.css','acervo.js','app.js'])assert.ok(fs.existsSync(path.join(__dirname,f)));
+assert.ok(!html.includes('https://'),'Página não deve carregar dependências externas');
+console.log('OK: acervo, missões, limite de seleção, remoção, exposição, texto seguro, fontes, rascunho, dados inválidos, impressão, reinício e referências HTML.');
+console.log('Verificação lógica com DOM simulado; não substitui validação visual em navegador.');
+
